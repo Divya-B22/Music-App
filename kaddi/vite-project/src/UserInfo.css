@@ -1,0 +1,39 @@
+/* UserInfo.css */
+
+.user-info {
+  text-align: left;
+}
+
+.user-info h2 {
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.user-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.user-info li {
+  background-color: #f1f4f8;
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-info li button {
+  background-color: #ff4c4c;
+  border: none;
+  padding: 6px 12px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-info li button:hover {
+  background-color: #d93636;
+}

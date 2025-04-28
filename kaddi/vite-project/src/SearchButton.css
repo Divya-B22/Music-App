@@ -1,0 +1,20 @@
+.search-page {
+  padding: 20px;
+  color: white;
+}
+
+.search-box {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+}
+
+.results .song-result {
+  background: #222;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+}

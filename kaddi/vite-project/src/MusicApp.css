@@ -1,0 +1,128 @@
+/* Base styles */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #121212;
+  color: white;
+}
+
+/* Navigation */
+.nav-sidebar {
+  width: 240px;
+  background-color: #000000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #b3b3b3;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+  color: white;
+}
+
+.nav-item.active {
+  color: white;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Songs grid */
+.songs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.song-card {
+  background-color: #181818;
+  border-radius: 8px;
+  padding: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.song-card:hover {
+  background-color: #282828;
+}
+
+.song-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+.song-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.song-artist {
+  color: #b3b3b3;
+  font-size: 14px;
+}
+
+/* Playlists */
+.playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.playlist-card {
+  display: flex;
+  background-color: #181818;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.playlist-card:hover {
+  background-color: #282828;
+}
+
+.playlist-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.playlist-info {
+  padding: 16px;
+}
+
+.playlist-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.playlist-count {
+  color: #b3b3b3;
+  font-size: 14px;
+}
