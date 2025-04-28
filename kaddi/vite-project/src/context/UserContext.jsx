@@ -2,13 +2,15 @@ import React, { createContext, useEffect, useState } from "react";
 const userContext = createContext();
 
 const UserContext = ({ children }) => {
-  const [userDetails, setUserDetails] = useState(
-    JSON.parse(localStorage.getItem("user")) ?? null
-  );
+  // const [userDetails, setUserDetails] = useState(
+  //   JSON.parse(sessionStorage.getItem("user")) ?? null
+  // );
+
+  const [userDetails, setUserDetails] = useState(null);
 
   const updateUserDetails = (data) => {
     setUserDetails(data);
-    localStorage.setItem("user", JSON.stringify(data));
+    sessionStorage.setItem("user", JSON.stringify(data));
   };
 
   useEffect(() => {

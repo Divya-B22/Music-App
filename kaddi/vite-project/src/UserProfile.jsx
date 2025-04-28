@@ -10,6 +10,7 @@ const UserProfile = () => {
   const navigate = useNavigate();
   //const { name, email } = location.state || {};
   const handleLogout = () => {
+    sessionStorage.clear();
     navigate("/");
   };
 
