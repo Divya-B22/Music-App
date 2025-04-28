@@ -5,7 +5,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "server": "cd server && npm run server",
-    "client": "cd kaddi/vite-project && npm run dev"
+    "client": "cd kaddi/vite-project && npm run dev",
+    "setupclient": "cd kaddi/vite-project && npm i",
+    "setupserver": "cd server && npm i"
   },
   "author": "",
   "license": "ISC",
