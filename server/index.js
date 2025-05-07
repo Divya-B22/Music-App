@@ -22,14 +22,16 @@ app.post("/login", async (req, res) => {
   if (!email || !password)
     return res.status(400).json({ message: "Please Provide all the details!" });
   try {
-    let qry = `select * from user where email=? `;
+    let qry = `select * from user where email=? and blocked=false; `;
     connection.query(qry, [email], function (err, result) {
       if (err) {
         console.log(err);
         return res.status(500).json({ message: "Internal server error!!!!!" });
       }
       if (result.length == 0) {
-        return res.status(404).json({ message: "user not found!" });
+        return res
+          .status(404)
+          .json({ message: "user not found! or has been blocked" });
       } else {
         qry = `select username,email from user where email=? and password=? `;
         connection.query(qry, [email, password], function (err, result) {
@@ -48,7 +50,7 @@ app.post("/login", async (req, res) => {
       }
     });
   } catch (e) {
-    console.log(e);
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
   }
 });
 
@@ -79,7 +81,7 @@ app.post("/signup", async (req, res) => {
       }
     });
   } catch (e) {
-    console.log(e);
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
   }
 });
 
@@ -87,11 +89,12 @@ app.get("/songs", (req, res) => {
   try {
     let qry = "select * from music;";
     connection.query(qry, function (err, result) {
-      if (err) return res.status(500).json("Internal Server Error!!!!!");
+      if (err)
+        return res.status(500).json({ message: "Internal Server Error!!!!!" });
       return res.status(200).json({ songs: result });
     });
   } catch (e) {
-    console.log(e);
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
   }
 });
 
@@ -102,7 +105,8 @@ app.post("/playlist", (req, res) => {
   try {
     let qry = "select * from playlist where playlist_name=?";
     connection.query(qry, [name], function (err, result) {
-      if (err) return res.status(500).json("Internal Server Error!!!!!");
+      if (err)
+        return res.status(500).json({ message: "Internal Server Error!!!!!" });
       if (result.length > 0) {
         return res
           .status(409)
@@ -113,15 +117,19 @@ app.post("/playlist", (req, res) => {
           qry,
           [name, coverUrl, email, songs.length, false],
           function (err, result) {
-            if (err) return res.status(500).json("Internal Server Error!!!!!");
+            if (err)
+              return res
+                .status(500)
+                .json({ message: "Internal Server Error!!!!!" });
             else {
               const bridgeQry =
                 "INSERT INTO bridge (playlist_name, music_name) VALUES ?";
               const values = songs.map((song) => [name, song]);
               connection.query(bridgeQry, [values], function (err, result) {
                 if (err) {
-                  console.log(err);
-                  return res.status(500).json("Internal Server Error!!!!!");
+                  return res
+                    .status(500)
+                    .json({ message: "Internal Server Error!!!!!" });
                 } else {
                   return res.status(200).json({ message: "Playlist created" });
                 }
@@ -132,7 +140,7 @@ app.post("/playlist", (req, res) => {
       }
     });
   } catch (e) {
-    console.log(e);
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
   }
 });
 
@@ -142,13 +150,49 @@ app.get("/:email/playlist", (req, res) => {
     let qry =
       "select playlist_name,image_url,song_count,liked from playlist join user on playlist.email=user.email where user.email=?;";
     connection.query(qry, [email], function (err, result) {
-      if (err) return res.status(500).json("Internal Server Error!!!!!");
+      if (err)
+        return res.status(500).json({ message: "Internal Server Error!!!!!" });
       else {
         return res.status(200).json({ playlists: result });
       }
     });
   } catch (e) {
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
+  }
+});
+
+app.get("/admin/getuser", (req, res) => {
+  try {
+    const qry = "select * from user;";
+    connection.query(qry, function (err, result) {
+      if (err)
+        return res.status(500).json({ message: "Internal Server Error!!!!!" });
+      return res.status(200).json({ users: result });
+    });
+  } catch (e) {
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
+  }
+});
+
+app.put("/admin/block", (req, res) => {
+  const { email, status } = req.body;
+  try {
+    let qry = "select * from user where email=?";
+    connection.query(qry, [email], function (err, result) {
+      if (err)
+        return res.status(500).json({ message: "Internal Server Error!!!!!" });
+      qry = "update user set blocked=? where email=?";
+      connection.query(qry, [status, email], function (err, result) {
+        if (err)
+          return res
+            .status(500)
+            .json({ message: "Internal Server Error!!!!!" });
+        return res.status(200).json({ message: "User blocked" });
+      });
+    });
+  } catch (e) {
     console.log(e);
+    return res.status(500).json({ message: "Internal Server Error!!!!!" });
   }
 });
 // listening on localhost:3000/ route with get request
