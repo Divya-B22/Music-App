@@ -10,14 +10,21 @@ const UserProfile = () => {
   const navigate = useNavigate();
   //const { name, email } = location.state || {};
   const handleLogout = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     navigate("/");
+  };
+  const handleBackClick = () => {
+    navigate("/musicapp");
   };
 
   return (
     <div className="profile-card">
+      <div className="back-btn" onClick={handleBackClick} aria-label="Go back">
+        <span className="back-icon"></span>
+        <span className="back-text">Back</span>
+      </div>
       <div className="profile-header">
-        <img src="\\krish.jpg" alt="Profile" className="profile-img" />
+        <img src="\krish.jpg" alt="Profile" className="profile-img" />
         <div className="profile-info">
           <br></br>
           <h2>{user.userDetails.username}</h2>

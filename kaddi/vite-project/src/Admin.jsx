@@ -1,26 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Admin.css"; // Import CSS file
 
 const Admin = () => {
   const navigate = useNavigate();
 
-  // Hardcoded admin credentials
-  const ADMIN_USERNAME = "admin";
-  const ADMIN_PASSWORD = "admin123";
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      setError(""); // Clear errors
-      navigate("/adminpage"); // Navigate to admin dashboard
-    } else {
-      setError("Invalid username or password");
+    try {
+      const response = await axios.post("/admin", { username, password });
+      if (response.status == 200) {
+        setError("");
+        navigate("/adminpage");
+      }
+    } catch (e) {
+      setError(
+        e.response?.data?.message ||
+          "Registration failed. Please check the backend server."
+      );
     }
   };
 

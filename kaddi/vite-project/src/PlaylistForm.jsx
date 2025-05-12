@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { musicContext } from "./context/MusicContext";
 import { userContext } from "./context/UserContext";
 import axios from "axios";
+import { playlistContext } from "./context/PlaylistContext";
 
 const PlaylistForm = () => {
   const { songs } = useContext(musicContext);
   const user = useContext(userContext);
   const navigate = useNavigate();
-  console.log("SONGS HERE");
-  console.log(songs);
+  const { updatePlaylists, playlists } = useContext(playlistContext);
   const allSongs = songs || [];
   const [playlistName, setPlaylistName] = useState("");
   const [coverUrl, setCoverUrl] = useState("");
@@ -46,14 +46,20 @@ const PlaylistForm = () => {
     try {
       const response = await axios.post("/playlist", newPlaylist);
       if (response.status == 200) {
-        alert("created");
+        updatePlaylists([
+          ...playlists,
+          {
+            image_url: coverUrl,
+            liked: 0,
+            playlist_name: playlistName,
+            song_count: selected.length,
+          },
+        ]);
+        navigate("/playlistpage");
       }
     } catch (e) {
       alert(e.response?.data?.message || e.message);
     }
-
-    console.log("NEW PAYLIST");
-    console.log(newPlaylist);
     // Save to localStorage
     // const existing = JSON.parse(localStorage.getItem("playlists")) || [];
     // localStorage.setItem(
@@ -65,7 +71,7 @@ const PlaylistForm = () => {
   };
 
   const goToMusicApp = () => {
-    navigate("/playlistpage");
+    navigate("/musicapp");
   };
 
   return (

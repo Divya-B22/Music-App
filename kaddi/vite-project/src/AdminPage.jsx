@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./AdminPage.css";
 
 export default function AdminPage() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   useEffect(() => {
     (async () => {
@@ -36,8 +38,17 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="admin-container">
+    <div
+      className="admin-container"
+      style={{ overflowY: "scroll", paddingTop: "550px", width: "700px" }}
+    >
       <h2>Admin Dashboard - User List</h2>
+      <div style={{ display: "flex", width: "100%" }}>
+        <button style={{ width: "60%" }} onClick={() => navigate("/")}>
+          Logout
+        </button>
+        <button style={{ width: "60%" }}>Add Song</button>
+      </div>
       <table className="user-table">
         <thead>
           <tr>

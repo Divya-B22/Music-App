@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Registration.css";
 import axios from "axios";
+import { userContext } from "./context/UserContext";
 
 const Registration = () => {
   const navigate = useNavigate();
+  const user = useContext(userContext);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -25,6 +27,7 @@ const Registration = () => {
     try {
       const response = await axios.post("/signup", formData);
       if (response.status === 200) {
+        user.updateUserDetails(response.data.user);
         navigate("/musicapp");
       }
     } catch (e) {
@@ -52,6 +55,12 @@ const Registration = () => {
       password: "",
     });
   };
+
+  if (user.userDetails) {
+    useEffect(() => {
+      navigate("/musicapp");
+    }, []);
+  }
 
   return (
     <div className="container">
@@ -99,8 +108,18 @@ const Registration = () => {
         <button type="submit">Register</button>
 
         <div className="register-link">
-          <p>
-            Already have an account? <Link to="/login">Login</Link>
+          <p style={{ position: "relative" }}>
+            <Link
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%,-50%)",
+              }}
+              to="/login"
+            >
+              Login
+            </Link>
           </p>
         </div>
       </form>

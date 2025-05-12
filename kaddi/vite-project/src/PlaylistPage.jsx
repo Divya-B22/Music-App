@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./PlaylistPage.css";
 import { playlistContext } from "./context/PlaylistContext";
 
@@ -12,19 +13,42 @@ const PlaylistPage = () => {
     navigate("/playlistForm");
   };
 
-  const handleRemove = (id) => {
-    const updated = playlists.filter((playlist) => playlist.id !== id);
-    setPlaylists(updated);
-    localStorage.setItem("playlists", JSON.stringify(updated));
+  const handleRemove = async (name) => {
+    const updated = playlists.filter(
+      (playlist) => playlist.playlist_name != name
+    );
+    try {
+      const response = await axios.delete("/deleteplaylist", {
+        data: {
+          name,
+        },
+      });
+      if (response.status == 200) setPlaylists(updated);
+    } catch (e) {
+      alert(e.response?.data?.message || e.message);
+    }
+    // localStorage.setItem("playlists", JSON.stringify(updated));
   };
 
   const handlePlaylistClick = (id) => {
     navigate(`/playlist/${id}`);
   };
 
+  const handleBackClick = () => {
+    navigate("/musicapp");
+  };
+
   return (
     <div className="playlist-page">
-      <h2>My Playlists</h2>
+      <div
+        className="back-for-playlist"
+        onClick={handleBackClick}
+        aria-label="Go back"
+      >
+        <span className="back-icon"></span>
+        <span className="back-text">Back</span>
+      </div>
+      <h2 style={{ color: "white" }}>My Playlists</h2>
       <div className="playlist-list">
         {playlists.map((playlist, index) => (
           <div
@@ -47,7 +71,7 @@ const PlaylistPage = () => {
               className="remove-button"
               onClick={(e) => {
                 e.stopPropagation(); // Prevents triggering the click to open details
-                handleRemove(playlist.id);
+                handleRemove(playlist.playlist_name);
               }}
             >
               Remove

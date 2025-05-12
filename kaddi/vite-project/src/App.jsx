@@ -1,16 +1,15 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./HomePage";
 import Registration from "./Registration";
-import RegistrationExample from "./EXample/Registration";
 import Login from "./Login";
 import Admin from "./Admin"; // Import Admin component
-import AdminDashboard from "./AdminDashboard";
 import MusicApp from "./MusicApp";
 import PlaylistForm from "./PlaylistForm";
 import PlaylistPage from "./PlaylistPage";
 import UserProfile from "./UserProfile";
 import SearchButton from "./SearchButton";
 import AdminPage from "./AdminPage";
+import Addsong from "./Addsong";
 import MusicLibrary from "./MusicLibrary";
 import UserInfo from "./UserInfo";
 import axios from "axios";
@@ -25,7 +24,6 @@ function App() {
       <Route path="/admin" element={<Admin />} />
       <Route path="/admindashboard" element={<h2>Welcome, Admin!</h2>} />
       {/* This is an example component */}
-      <Route path="/signupExample" element={<RegistrationExample />} />
       <Route path="/musicapp" element={<MusicApp />} />
       <Route path="/" element={<HomePage />} />
       <Route path="/playlistform" element={<PlaylistForm />} />
@@ -35,6 +33,7 @@ function App() {
       <Route path="/adminpage" element={<AdminPage />} />
       <Route path="/musiclibrary" element={<MusicLibrary />} />
       <Route path="/userinfo" element={<UserInfo />} />
+      <Route path="/admin/song" element={<Addsong />} />
       <Route path="/music/:filePath" element={<PlayMusic />} />
     </Routes>
   );
