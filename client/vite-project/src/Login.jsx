@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import axios from "axios";
@@ -33,6 +33,11 @@ const Login = () => {
       );
     }
   };
+  if (user.userDetails) {
+    useEffect(() => {
+      navigate("/musicapp");
+    }, []);
+  }
 
   return (
     <div className="login-container">
@@ -60,8 +65,18 @@ const Login = () => {
         <button type="submit">Login</button>
 
         <div className="register-link">
-          <p>
-            Don't have an account? <Link to="/signup">Sign up</Link>
+          <p style={{ position: "relative" }}>
+            <Link
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%,-50%)",
+              }}
+              to="/signup"
+            >
+              Sign up
+            </Link>
           </p>
         </div>
       </form>
