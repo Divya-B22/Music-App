@@ -19,7 +19,11 @@ function MusicApp() {
     <div className="app-container">
       {/* Navigation Sidebar */}
       <nav className="nav-sidebar">
-        <Link to="#" className="nav-item active">
+        <Link
+          to="#"
+          onClick={() => updateIsPlaylistPage()}
+          className="nav-item active"
+        >
           <Home size={24} />
           <span>Home</span>
         </Link>

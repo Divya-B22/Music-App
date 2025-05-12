@@ -23,7 +23,7 @@ const Playlistsongs = ({ playlist_name }) => {
 
   return (
     <div>
-      <section className="section">
+      <section className="section" style={{ padding: "40px" }}>
         <h2 className="section-title">Popular Songs</h2>
         <div className="songs-grid">
           {songs.length > 0 ? (
